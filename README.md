@@ -2,6 +2,11 @@
 
 The WEPopover is designed to mimic the behavior and appearance of the UIPopover only available on iPad. It is designed to work on iPad, iPhone, and includes support for Retina displays.
 
+## Features:
+1. iOS 5.0+
+2. Retina support
+3. ARC
+
 ## Installation
 
 Add the code and image files to your project.
