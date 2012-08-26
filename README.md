@@ -2,6 +2,23 @@
 
 The WEPopover is designed to mimic the behavior and appearance of the UIPopover only available on iPad. It is designed to work on iPad, iPhone, and includes support for Retina displays.
 
+## Installation
+
+Add/copy the code and image files into your project.
+* WEPopoverContainerView.h
+* WEPopoverContainerView.m
+* WEPopoverController.h
+* WEPopoverController.m
+* popoverArrowDown.png
+* popoverArrowDown@2x.png
+* popoverArrowLeft.png
+* popoverArrowLeft@2x.png
+* popoverArrowRight.png
+* popoverArrowRight@2x.png
+* popoverArrowUp.png
+* popoverArrowUp@2x.png
+* popoverBg.png
+* popoverBg@2x.png
 
 ## Example Usage
 
