@@ -202,7 +202,7 @@
 		CGPoint contentOffset = [(UIScrollView *)theView contentOffset];
 		displayArea = CGRectMake(contentOffset.x, contentOffset.y, theView.frame.size.width, theView.frame.size.height);
 	} else {
-		displayArea = CGRectMake(0, 0, theView.frame.size.width, theView.frame.size.height);
+		displayArea = CGRectMake(0, 0, theView.bounds.size.width, theView.bounds.size.height);
 	}
 	return displayArea;
 }
