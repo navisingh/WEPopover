@@ -4,7 +4,7 @@ The WEPopover is designed to mimic the behavior and appearance of the UIPopover 
 
 ## Installation
 
-Add/copy the code and image files into your project.
+Add the code and image files to your project.
 * WEPopoverContainerView.h
 * WEPopoverContainerView.m
 * WEPopoverController.h
