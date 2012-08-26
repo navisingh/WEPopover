@@ -16,7 +16,7 @@
 @property (nonatomic, strong) IBOutlet UIWindow *window;
 @property (nonatomic, strong) IBOutlet WEPopoverTableViewController *viewController;
 
-@property (nonatomic, strong) UINavigationController* nav;
+@property (nonatomic, strong) UINavigationController* navController;
 
 @end
 

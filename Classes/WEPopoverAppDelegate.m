@@ -13,8 +13,7 @@
 
 @synthesize window = _window;
 @synthesize viewController = _viewController;
-
-@synthesize nav = _nav;
+@synthesize navController = _navController;
 
 
 #pragma mark -
@@ -24,32 +23,11 @@
     
     // Override point for customization after application launch.
 
-	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:self.viewController];
+	self.navController = [[UINavigationController alloc] initWithRootViewController:self.viewController];
     
     // Add the view controller's view to the window and display.
-    [self.window addSubview:navController.view];
-
+    [self.window addSubview:self.navController.view];
 	[self.window makeKeyAndVisible];
-
-    /* 
-     Fix for bug exposed by conversion to ARC:
-     
-     Previously, the UINavigationController navController was not (auto)released anywhere. Thus, it continued
-     to exist after this method exited. That accidental memory leak caused it to still exist later when
-     WePopoverTableViewController referenced it with "... self.navigationController ..."
-     Thus, the reference worked.
-     
-     After conversion to ARC, the UINavigationController object is automatically released. 
-     This caused the later reference to "self.navigationController" to find "nil" since the object was gone. 
-     
-     In order to fix this, we have to retain the created navigation controller somewhere (thus replicating the
-     accidental retention in pre-ARC code).
-     
-     Note: this line retains the navigation controller's *view*, but not the navigation controller itself:
-        [self.window addSubview:navController.view];
-     */
-    // Retain navigation controller:
-	self.nav = navController;
 
     return YES;
 }
