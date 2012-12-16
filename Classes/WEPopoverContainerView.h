@@ -9,21 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface WEPopoverContainerViewProperties : NSObject
-{
-	NSString *bgImageName;
-	NSString *upArrowImageName;
-	NSString *downArrowImageName;
-	NSString *leftArrowImageName;
-	NSString *rightArrowImageName;
-	CGFloat leftBgMargin;
-	CGFloat rightBgMargin;
-	CGFloat topBgMargin;
-	CGFloat bottomBgMargin;
-	NSInteger topBgCapSize;
-	NSInteger leftBgCapSize;
-}
 
-@property(nonatomic) NSString *bgImageName;
+@property(nonatomic) NSString *backgroundImageName;
 @property(nonatomic) NSString *upArrowImageName;
 @property(nonatomic) NSString *downArrowImageName;
 @property(nonatomic) NSString *leftArrowImageName;
@@ -42,25 +29,9 @@
 @end
 
 
-@interface WEPopoverContainerView : UIView {
-	UIImage *bgImage;
-	UIImage *arrowImage;
-	
-	WEPopoverContainerViewProperties *properties;
-	
-	UIPopoverArrowDirection arrowDirection;
-	
-	CGRect arrowRect;
-	CGRect bgRect;
-	CGPoint offset;
-	
-	
-	CGSize correctedSize;
-	UIView *contentView;
-}
-
+@interface WEPopoverContainerView : UIView 
 @property (nonatomic, readonly) UIPopoverArrowDirection arrowDirection;
-@property (nonatomic) UIView *contentView;
+@property (nonatomic) UIView *contentView; //TODO: investigate whether it should be weak.
 
 - (id)initWithSize:(CGSize)theSize 
 		anchorRect:(CGRect)anchorRect 

@@ -11,6 +11,13 @@
 
 #define FADE_DURATION 0.2
 
+@interface WEPopoverController()
+{
+    UITapGestureRecognizer *_tapGesture;
+    UIView *_parentView;
+}
+@end
+
 @interface WEPopoverController(Private)
 
 - (void)setView:(UIView *)v;
@@ -19,10 +26,8 @@
 
 @end
 
-
 @implementation WEPopoverController
 
-@synthesize contentViewController;
 @synthesize popoverContentSize;
 @synthesize popoverVisible;
 @synthesize popoverArrowDirection;
@@ -41,19 +46,16 @@
 - (void)dealloc {
 	[self dismissPopoverAnimated:NO];
     
-    
-    if(parentView) {
-        [parentView removeGestureRecognizer:tapGesture];
+    if(_parentView) {
+        [_parentView removeGestureRecognizer:_tapGesture];
     }
-    tapGesture = nil;
-    parentView = nil;
-    
-    
+    _tapGesture = nil;
+    _parentView = nil;
 }
 
 - (void)setContentViewController:(UIViewController *)vc {
-	if (vc != contentViewController) {
-		contentViewController = vc;
+	if (vc != _contentViewController) {
+		_contentViewController = vc;
 		popoverContentSize = [vc contentSizeForViewInPopover];
 	}
 }
@@ -63,13 +65,13 @@
 	if ([animationID isEqual:@"FadeIn"]) {
 		self.view.userInteractionEnabled = YES;
 		popoverVisible = YES;
-		[contentViewController viewDidAppear:YES];
+		[_contentViewController viewDidAppear:YES];
 	} else {
         if(delegate && [delegate respondsToSelector:@selector(popoverControllerDidDismissPopover:)]) {
             [delegate popoverControllerDidDismissPopover:self];
         }
 		popoverVisible = NO;
-		[contentViewController viewDidDisappear:YES];
+		[_contentViewController viewDidDisappear:YES];
 		[self.view removeFromSuperview];
 		self.view = nil;
 	}
@@ -78,11 +80,11 @@
 - (void)dismissPopoverAnimated:(BOOL)animated {
 	
 	if (self.view) {
-		[contentViewController viewWillDisappear:animated];
+		[_contentViewController viewWillDisappear:animated];
 		
-        if(tapGesture) {
-            [parentView removeGestureRecognizer:tapGesture];
-            tapGesture = nil;
+        if(_tapGesture) {
+            [_parentView removeGestureRecognizer:_tapGesture];
+            _tapGesture = nil;
         }
             
 		if (animated) {
@@ -103,7 +105,7 @@
             }
             
 			popoverVisible = NO;
-			[contentViewController viewDidDisappear:animated];
+			[_contentViewController viewDidDisappear:animated];
 			[self.view removeFromSuperview];
 			self.view = nil;
 		}
@@ -119,8 +121,8 @@
             if([self isPopoverVisible] && [delegate popoverControllerShouldDismissPopover:self]) {
                 [self dismissPopoverAnimated:YES];
                 
-                [parentView removeGestureRecognizer:tapGesture];
-                tapGesture = nil;
+                [_parentView removeGestureRecognizer:_tapGesture];
+                _tapGesture = nil;
             }
         } 
     }
@@ -141,17 +143,17 @@
 	popoverArrowDirection = containerView.arrowDirection;
 	[theView addSubview:containerView];
 
-	containerView.contentView = contentViewController.view;
+	containerView.contentView = _contentViewController.view;
 	
 	self.view = containerView;
 	
-	[contentViewController viewWillAppear:animated];
+	[_contentViewController viewWillAppear:animated];
 	
     // Used to dismiss the popover if it's parent view is touched
-    tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(parentViewTapped:)];
-    tapGesture.cancelsTouchesInView = NO;
-    [theView addGestureRecognizer:tapGesture];
-    parentView = theView;
+    _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(parentViewTapped:)];
+    _tapGesture.cancelsTouchesInView = NO;
+    [theView addGestureRecognizer:_tapGesture];
+    _parentView = theView;
     
     
 	if (animated) {
@@ -170,7 +172,7 @@
 	} else {
 		self.view.userInteractionEnabled = YES;
 		popoverVisible = YES;
-		[contentViewController viewDidAppear:animated];
+		[_contentViewController viewDidAppear:animated];
 	}
 }
 
@@ -215,12 +217,12 @@
 	NSLog(@"TheSize: %@", NSStringFromCGSize(theSize));
 	*/
     
-	NSString *bgImageName = nil;
+	NSString *backgroundImageName = nil;
 	CGFloat bgMargin = 0.0;
 	CGFloat bgCapSize = 0.0;
 	CGFloat contentMargin = 4.0;
     
-    bgImageName = @"popoverBg.png";
+    backgroundImageName = @"popoverBg.png";
     
     // These constants are determined by the popoverBg.png image file and are image dependent
     bgMargin = 13; // margin width of 13 pixels on all sides popoverBg.png (62 pixels wide - 36 pixel background) / 2 == 26 / 2 == 13 
@@ -232,7 +234,7 @@
 	ret.bottomBgMargin = bgMargin;
 	ret.leftBgCapSize = bgCapSize;
 	ret.topBgCapSize = bgCapSize;
-	ret.bgImageName = bgImageName;
+	ret.backgroundImageName = backgroundImageName;
 	ret.leftContentMargin = contentMargin;
 	ret.rightContentMargin = contentMargin - 1; // Need to shift one pixel for border to look correct
 	ret.topContentMargin = contentMargin; 

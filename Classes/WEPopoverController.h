@@ -18,20 +18,7 @@
 
 @end
 
-@interface WEPopoverController : NSObject {
-	UIViewController *contentViewController;
-	UIView *__weak view;
-	
-	BOOL popoverVisible;
-	UIPopoverArrowDirection popoverArrowDirection;
-	id <PopoverControllerDelegate> __weak delegate;
-	CGSize popoverContentSize;
-	WEPopoverContainerViewProperties *containerViewProperties;
-	id <NSObject> context;
-    
-    UITapGestureRecognizer *tapGesture;
-    UIView *parentView;
-}
+@interface WEPopoverController : NSObject
 
 @property(nonatomic) UIViewController *contentViewController;
 
